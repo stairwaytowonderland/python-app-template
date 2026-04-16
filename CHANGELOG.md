@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.13.0 (2026-04-16)
+
+### Features
+
+- Empty commit ([#1](https://github.com/stairwaytowonderland/python-app-template/pull/1),
+  [`1fd9195`](https://github.com/stairwaytowonderland/python-app-template/commit/1fd919537bd2092ada38c4ee5e9c623909125dda))
+
+
 ## v1.12.0 (2026-04-16)
 
 ### Features
