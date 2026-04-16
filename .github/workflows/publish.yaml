@@ -7,6 +7,14 @@ on:
 
   workflow_dispatch:
     inputs:
+      tag:
+        description: 'Release tag to build and publish (e.g. v1.2.3)'
+        required: true
+        type: string
+      provenance:
+        description: 'Whether to generate a SLSA build provenance attestation.'
+        required: false
+        default: 'false'
       python-version:
         description: 'Python version to use for building and publishing'
         required: false
@@ -52,8 +60,9 @@ jobs:
       id-token: write # OIDC token for attestations (if provenance enabled)
       attestations: write # build provenance attestations (if enabled)
     with:
-      tag: ${{ github.ref }}
+      ref: ${{ github.ref }}
+      tag: ${{ github.event.inputs.tag || github.ref }}
       python-version: ${{ needs.configure.outputs.python-version }}
       requirements: ${{ needs.configure.outputs.requirements }}
-      provenance: true
+      provenance: ${{ github.event.inputs.provenance || 'false' }}
     secrets: inherit
