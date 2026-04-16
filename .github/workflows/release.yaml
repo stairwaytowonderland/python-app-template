@@ -80,7 +80,7 @@ jobs:
         uses: stairwaytowonderland/python-reusable-workflows/.github/actions/dispatch@main
         with:
           workflow: publish.yaml
-          ref: ${{ needs.release.outputs.tag }}
+          tag: ${{ needs.release.outputs.tag }}
           provenance: true
           python-version: ${{ needs.configure.outputs.python-version }}
           requirements: ${{ needs.configure.outputs.requirements }}
