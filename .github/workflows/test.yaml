@@ -1,0 +1,60 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      python-version:
+        description: 'Python version(s) to test against as a comma-separated string.'
+        required: false
+        type: string
+        default: '3.12'
+      requirements:
+        description: 'Path to a requirements.txt file to install before running tests. Leave empty (default) to install from pyproject.toml test dependencies.'
+        required: false
+        type: string
+        default: ''
+  workflow_call:
+    inputs:
+      python-version:
+        description: 'Python version(s) to test against as a comma-separated string.'
+        required: false
+        type: string
+        default: '3.12'
+      requirements:
+        description: 'Path to a requirements.txt file to install before running tests. Leave empty (default) to install from pyproject.toml test dependencies.'
+        required: false
+        type: string
+        default: ''
+
+env:
+  DEFAULT_PYTHON_VERSION: '3.12' # override via python-version input
+  REQUIREMENTS: '' # override via requirements input
+
+jobs:
+  configure:
+    name: Normalize Inputs
+    runs-on: ubuntu-latest
+    outputs:
+      python-version: ${{ steps.setup.outputs.python-version }}
+      requirements: ${{ steps.setup.outputs.requirements }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Python Variables
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          python-version: ${{ github.event.inputs.python-version || env.DEFAULT_PYTHON_VERSION }}
+          requirements: ${{ github.event.inputs.requirements || env.REQUIREMENTS }}
+
+  test:
+    name: Test
+    needs: [configure]
+    uses: stairwaytowonderland/python-reusable-workflows/.github/workflows/test.yaml@main
+    permissions:
+      contents: read
+    with:
+      python-version: ${{ needs.configure.outputs.python-version }}
+      requirements: ${{ needs.configure.outputs.requirements }}

@@ -1,0 +1,15 @@
+name: Pre-commit
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  pre-commit:
+    name: Pre-commit
+    uses: stairwaytowonderland/python-reusable-workflows/.github/workflows/pre-commit.yaml@main
+    permissions:
+      contents: read
+      pull-requests: read

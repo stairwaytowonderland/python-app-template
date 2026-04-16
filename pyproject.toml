@@ -1,0 +1,61 @@
+# Minimal pyproject.toml template for a project using the release-templates
+# CI/CD workflows (release.yaml + publish.yaml or poetry.yaml).
+#
+# Build backend : setuptools + setuptools-scm (version read from git tags)
+# No Poetry or Poe tooling — add those if your project needs them.
+#
+# References:
+#   https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+#   https://setuptools-scm.readthedocs.io/en/latest/
+
+# ---------------------------------------------------------------------------- #
+# Build System:
+# ---------------------------------------------------------------------------- #
+
+[build-system]
+requires = ["setuptools>=68", "wheel", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+# ---------------------------------------------------------------------------- #
+# Project (PEP 517/621):
+# ---------------------------------------------------------------------------- #
+
+[project]
+name = "your-package"
+dynamic = ["version"]   # version derived from git tags via setuptools-scm at build time
+description = "A short description of your package."
+# readme = "README.md"
+# authors = [{ name = "Your Name", email = "you@example.com" }]
+# license = "MIT"
+# license-files = ["LICENSE.txt"]
+requires-python = ">=3.10,<4"
+# keywords = []
+# classifiers = []
+# dependencies = [
+#     "click>=8.1.0",
+# ]
+
+# [project.scripts]
+# your-package = "your_package.cli:main"
+
+# [project.urls]
+# Homepage = "https://github.com/your-org/your-repo"
+
+# ---------------------------------------------------------------------------- #
+# Package Discovery (setuptools):
+# ---------------------------------------------------------------------------- #
+
+[tool.setuptools.packages.find]
+where = ["src"]
+# Use 'where' + 'include' to specify a non-standard source layout
+# where = ["."]
+# include = ["<module>*"]
+
+# ---------------------------------------------------------------------------- #
+# Dynamic Versioning (setuptools-scm):
+# ---------------------------------------------------------------------------- #
+
+# Reads the version from git tags (e.g. v1.2.3 → 1.2.3) at build time.
+# https://setuptools-scm.readthedocs.io/en/latest/
+[tool.setuptools_scm]
+# fallback_version = "0.0.0"   # used when there is no .git directory (e.g. tarball builds)
