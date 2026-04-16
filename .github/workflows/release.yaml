@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Action | Dispatch publish workflow
-        uses: stairwaytowonderland/python-reusable-workflows/.github/actions/dispatch@main
+        uses: stairwaytowonderland/python-reusable-workflows/.github/actions/dispatch-workflow@main
         with:
           workflow: publish.yaml
           tag: ${{ needs.release.outputs.tag }}
