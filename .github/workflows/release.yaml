@@ -71,18 +71,18 @@ jobs:
   # Runs the reusable publish workflow, chained from the release outputs.      #
   # Only runs when a new version was actually released.                        #
   # -------------------------------------------------------------------------- #
-  publish:
-    name: Publish
-    needs: [configure, release]
-    if: needs.release.outputs.released == 'true'
-    uses: stairwaytowonderland/python-reusable-workflows/.github/workflows/publish.yaml@main
-    permissions:
-      contents: write # upload release assets
-      id-token: write # OIDC token for attestations (if provenance enabled)
-      attestations: write # build provenance attestations (if enabled)
-    with:
-      tag: ${{ needs.release.outputs.tag }}
-      python-version: ${{ needs.configure.outputs.python-version }}
-      requirements: ${{ needs.configure.outputs.requirements }}
-      provenance: true
-    secrets: inherit
+  # publish:
+  #   name: Publish
+  #   needs: [configure, release]
+  #   if: needs.release.outputs.released == 'true'
+  #   uses: stairwaytowonderland/python-reusable-workflows/.github/workflows/publish.yaml@main
+  #   permissions:
+  #     contents: write # upload release assets
+  #     id-token: write # OIDC token for attestations (if provenance enabled)
+  #     attestations: write # build provenance attestations (if enabled)
+  #   with:
+  #     tag: ${{ needs.release.outputs.tag }}
+  #     python-version: ${{ needs.configure.outputs.python-version }}
+  #     requirements: ${{ needs.configure.outputs.requirements }}
+  #     provenance: true
+  #   secrets: inherit
