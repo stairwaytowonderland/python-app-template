@@ -18,19 +18,6 @@ on:
         type: string
         default: ''
 
-  workflow_call:
-    inputs:
-      python-version:
-        description: 'Python version to use for building and publishing'
-        required: false
-        type: string
-        default: '3.12'
-      requirements:
-        description: 'Path to a requirements.txt file to install before building (e.g. requirements.txt). Leave empty (default) to use Poetry instead.'
-        required: false
-        type: string
-        default: ''
-
 # Default to least-privileged permissions; individual jobs override as needed.
 permissions:
   contents: read
