@@ -14,7 +14,8 @@ on:
       provenance:
         description: 'Whether to generate a SLSA build provenance attestation.'
         required: false
-        default: 'false'
+        type: boolean
+        default: false
       python-version:
         description: 'Python version to use for building and publishing'
         required: false
@@ -63,5 +64,5 @@ jobs:
       tag: ${{ github.event.inputs.tag || github.ref }}
       python-version: ${{ needs.configure.outputs.python-version }}
       requirements: ${{ needs.configure.outputs.requirements }}
-      provenance: ${{ github.event.inputs.provenance || 'false' }}
+      provenance: ${{ github.event.inputs.provenance == 'true' }}
     secrets: inherit
