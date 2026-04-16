@@ -60,7 +60,6 @@ jobs:
       id-token: write # OIDC token for attestations (if provenance enabled)
       attestations: write # build provenance attestations (if enabled)
     with:
-      ref: ${{ github.ref }}
       tag: ${{ github.event.inputs.tag || github.ref }}
       python-version: ${{ needs.configure.outputs.python-version }}
       requirements: ${{ needs.configure.outputs.requirements }}
