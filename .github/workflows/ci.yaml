@@ -27,9 +27,6 @@ on:
 #   publish.yaml — contents: write (upload release assets)
 #                  id-token: write + attestations: write (build provenance)
 
-permissions:
-  contents: read
-
 env:
   PYTHON_VERSION: ${{ inputs.python-version || '3.12' }} # override via python-version input
   REQUIREMENTS: ${{ inputs.requirements || '' }} # override via requirements input
