@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.7.0 (2026-04-16)
+
+### Features
+
+- Updates
+  ([`a8015b0`](https://github.com/stairwaytowonderland/python-app-template/commit/a8015b06c24d9f23db5f589603a62e9976e81091))
+
+
 ## v1.6.0 (2026-04-16)
 
 ### Features
