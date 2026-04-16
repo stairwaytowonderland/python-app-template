@@ -1,4 +1,4 @@
-name: Release
+name: CI
 
 on:
   # push:
@@ -27,7 +27,6 @@ on:
 #   publish.yaml — contents: write (upload release assets)
 #                  id-token: write + attestations: write (build provenance)
 
-# Default to least-privileged permissions; individual jobs override as needed.
 permissions:
   contents: read
 

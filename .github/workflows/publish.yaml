@@ -1,4 +1,4 @@
-name: Publish
+name: Publish Release
 
 on:
   push:
@@ -27,10 +27,6 @@ on:
         type: string
         default: ''
 
-# Default to least-privileged permissions; individual jobs override as needed.
-permissions:
-  contents: read
-
 env:
   DEFAULT_PYTHON_VERSION: ${{ inputs.python-version || '3.12' }} # override via python-version input
   REQUIREMENTS: ${{ inputs.requirements || '' }} # override via requirements input
@@ -47,7 +43,7 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Python Variables
         id: setup
-        uses: ./.github/actions/setup
+        uses: stairwaytowonderland/python-reusable-workflows/.github/actions/setup-variables@main
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           requirements: ${{ env.REQUIREMENTS }}
