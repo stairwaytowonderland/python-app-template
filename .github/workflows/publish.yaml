@@ -5,6 +5,32 @@ on:
     tags:
       - 'v*'
 
+  workflow_dispatch:
+    inputs:
+      python-version:
+        description: 'Python version to use for building and publishing'
+        required: false
+        type: string
+        default: '3.12'
+      requirements:
+        description: 'Path to a requirements.txt file to install before building (e.g. requirements.txt). Leave empty (default) to use Poetry instead.'
+        required: false
+        type: string
+        default: ''
+
+  workflow_call:
+    inputs:
+      python-version:
+        description: 'Python version to use for building and publishing'
+        required: false
+        type: string
+        default: '3.12'
+      requirements:
+        description: 'Path to a requirements.txt file to install before building (e.g. requirements.txt). Leave empty (default) to use Poetry instead.'
+        required: false
+        type: string
+        default: ''
+
 # Default to least-privileged permissions; individual jobs override as needed.
 permissions:
   contents: read
@@ -27,8 +53,8 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-          requirements: ${{ env.REQUIREMENTS }}
+          python-version: ${{ github.event.inputs.python-version || env.DEFAULT_PYTHON_VERSION }}
+          requirements: ${{ github.event.inputs.requirements || env.REQUIREMENTS }}
 
   publish:
     name: Publish
