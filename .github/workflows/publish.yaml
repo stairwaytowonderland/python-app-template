@@ -32,8 +32,8 @@ permissions:
   contents: read
 
 env:
-  DEFAULT_PYTHON_VERSION: '3.12' # override via python-version input
-  REQUIREMENTS: '' # override via requirements input
+  DEFAULT_PYTHON_VERSION: ${{ inputs.python-version || '3.12' }} # override via python-version input
+  REQUIREMENTS: ${{ inputs.requirements || '' }} # override via requirements input
 
 jobs:
   configure:
@@ -49,8 +49,8 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
         with:
-          python-version: ${{ github.event.inputs.python-version || env.DEFAULT_PYTHON_VERSION }}
-          requirements: ${{ github.event.inputs.requirements || env.REQUIREMENTS }}
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          requirements: ${{ env.REQUIREMENTS }}
 
   publish:
     name: Publish

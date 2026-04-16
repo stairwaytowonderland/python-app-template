@@ -28,8 +28,8 @@ permissions:
   contents: read
 
 env:
-  DEFAULT_PYTHON_VERSION: '3.12' # override via python-version input
-  REQUIREMENTS: '' # override via requirements input
+  PYTHON_VERSION: ${{ inputs.python-version || '3.12' }} # override via python-version input
+  REQUIREMENTS: ${{ inputs.requirements || '' }} # override via requirements input
 
 jobs:
   configure:
@@ -39,14 +39,12 @@ jobs:
       python-version: ${{ steps.setup.outputs.python-version }}
       requirements: ${{ steps.setup.outputs.requirements }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Setup Python Variables
+      - name: Setup
         id: setup
-        uses: ./.github/actions/setup
+        uses: stairwaytowonderland/python-reusable-workflows/.github/actions/setup-variables@main
         with:
-          python-version: ${{ github.event.inputs.python-version || env.DEFAULT_PYTHON_VERSION }}
-          requirements: ${{ github.event.inputs.requirements || env.REQUIREMENTS }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          requirements: ${{ env.REQUIREMENTS }}
 
   test:
     name: Test
