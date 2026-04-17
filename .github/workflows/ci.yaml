@@ -1,12 +1,12 @@
 name: CI
 
 on:
-  # push:
-  #   branches: [main]
-  workflow_run:
-    workflows: ['Pre-commit', 'Test']
+  push:
     branches: [main]
-    types: [completed]
+  # workflow_run:
+  #   workflows: ['Pre-commit', 'Test']
+  #   branches: [main]
+  #   types: [completed]
   workflow_dispatch:
     inputs:
       python-version:
@@ -34,7 +34,7 @@ env:
 jobs:
   configure:
     name: Normalize Inputs
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'workflow_dispatch'
+    # if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       python-version: ${{ steps.setup.outputs.python-version }}
