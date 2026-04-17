@@ -63,19 +63,18 @@ The template ships four workflows that together form the CI/CD pipeline:
 
 | Workflow          | Calls                                                     | Runs when                                    |
 | ----------------- | --------------------------------------------------------- | -------------------------------------------- |
-| `pre-commit.yaml` | `pre-commit.yaml` (reusable)                              | Every push to any branch                     |
+| `pre-commit.yaml` | `pre-commit.yaml` (reusable)                              | Every PR to `main`                           |
 | `test.yaml`       | `test.yaml` (reusable)                                    | Every PR to `main`                           |
-| `ci.yaml`         | `release.yaml` (reusable), then dispatches `publish.yaml` | After Pre-commit or Test succeed on `main`   |
+| `ci.yaml`         | `release.yaml` (reusable), then dispatches `publish.yaml` | Push to `main`                               |
 | `publish.yaml`    | `publish.yaml` (reusable)                                 | On `v*` tag push, or dispatched by `ci.yaml` |
 
-`ci.yaml` is the main orchestrator: it triggers via `workflow_run` once the Pre-commit or Test workflow completes
-successfully on `main`, runs python-semantic-release to cut a release if warranted, and then dispatches `publish.yaml`
-to build and publish the new version.
+`ci.yaml` is the main orchestrator: it triggers on every push to `main`, runs python-semantic-release to cut a release
+if warranted, and then dispatches `publish.yaml` to build and publish the new version.
 
 ```mermaid
 flowchart TD
-    push_any["push (any branch)"] --> pre_commit
-    pr_main["pull_request → main"] --> test
+    pr_main["pull_request → main"] --> pre_commit
+    pr_main --> test
 
     subgraph pre_commit["pre-commit.yaml"]
         PC["Pre-commit checks"]
@@ -85,8 +84,10 @@ flowchart TD
         T["pytest"]
     end
 
-    pre_commit -- "&nbsp;completed: success&nbsp;<br>(on main)&nbsp;" --> ci
-    test -- "&nbsp;completed: success&nbsp;<br>(on main)&nbsp;" --> ci
+    pre_commit -- "&nbsp;required status check&nbsp;" --> merge
+    test -- "&nbsp;required status check&nbsp;" --> merge
+    merge(["merge PR"]) --> push_main["push → main"]
+    push_main --> ci
 
     subgraph ci["ci.yaml"]
         CFG["Normalize Inputs"] --> REL["python-semantic-release"]
@@ -103,3 +104,23 @@ flowchart TD
 
 Adjust the `with:` inputs as needed — see the [**Reusable workflow reference**](https://github.com/stairwaytowonderland/python-reusable-workflows/blob/main/README.md#reusable-workflows-reference)
 for all available options.
+
+## Local development
+
+Install the dev dependencies (includes `pre-commit`, `black`, `isort`, and `autoflake`):
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+Then install the git hooks so they run automatically before each commit:
+
+```bash
+pre-commit install
+```
+
+To run all hooks manually against every file:
+
+```bash
+pre-commit run --all-files
+```
