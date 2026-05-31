@@ -7,24 +7,6 @@ commits, cuts a release if warranted, and dispatches a build and publish run aut
 ## Project structure
 
 ```none
-.
-├── src/
-│   └── sample_app/
-│       ├── __init__.py
-│       └── cli.py              # entry point: `sample-app`
-├── .github/
-│   └── workflows/
-│       ├── ci.yaml             # main orchestration workflow (release + publish dispatch)
-│       ├── pre-commit.yaml     # runs pre-commit checks on every push
-│       ├── test.yaml           # runs tests on PRs to main
-│       └── publish.yaml        # builds and publishes releases
-├── tests/
-│   └── cli_test.py
-├── pyproject.toml              # Python project config
-└── requirements-dev.txt        # Dev dependencies (linting, formatting, pre-commit)
-```
-
-```none
 ./
 ├── .github/
 │   └── workflows/
