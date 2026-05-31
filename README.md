@@ -6,6 +6,9 @@ commits, cuts a release if warranted, and dispatches a build and publish run aut
 
 ## Project structure
 
+> [!NOTE]
+> `tree -a -F -L 3 -I '.git|.vscode' --gitignore --dirsfirst .`
+
 ```none
 ./
 ├── .github/
@@ -27,7 +30,6 @@ commits, cuts a release if warranted, and dispatches a build and publish run aut
 ├── .pre-commit-config.yaml
 ├── .prettierignore
 ├── .prettierrc
-├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── pyproject.toml              # Python project config
