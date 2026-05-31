@@ -24,6 +24,35 @@ commits, cuts a release if warranted, and dispatches a build and publish run aut
 └── requirements-dev.txt        # Dev dependencies (linting, formatting, pre-commit)
 ```
 
+```none
+./
+├── .github/
+│   └── workflows/
+│       ├── ci.yaml             # main orchestration workflow (release + publish dispatch)
+│       ├── pre-commit.yaml     # runs pre-commit checks on every push
+│       ├── publish.yaml        # builds and publishes releases
+│       └── test.yaml           # runs tests on PRs to main
+├── src/
+│   └── sample_app/
+│       ├── __init__.py
+│       └── cli.py              # entry point: `sample-app`
+├── tests/
+│   └── cli_test.py
+├── .editorconfig
+├── .gitignore
+├── .markdownlint.json
+├── .pre-commit-ci.yaml
+├── .pre-commit-config.yaml
+├── .prettierignore
+├── .prettierrc
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── pyproject.toml              # Python project config
+├── README.md                   # THIS FILE
+└── requirements-dev.txt        # Dev dependencies (linting, formatting, pre-commit)
+```
+
 ## Configuration
 
 ### `pyproject.toml`
